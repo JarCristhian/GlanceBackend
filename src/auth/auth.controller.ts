@@ -10,13 +10,6 @@ import { Auth } from './decorators/auth.decorator';
 import { UserActiveI } from '../common/interfaces/user-active.interface';
 import { ActiveUser } from '../common/decorators/active-user.decorator';
 
-// // interface RequestWithUser extends Request {
-// //   user: {
-// //     email: string;
-// //     role: string;
-// //   }
-// // }
-
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) { }
@@ -31,16 +24,16 @@ export class AuthController {
     return this.authService.loginUser(loginDto);
   }
 
+  @Get('profile')
+  @Auth(Role.ADMIN, Role.USER)
+  Profile(@ActiveUser() user: UserActiveI) {
+    return this.authService.profile(user);
+  }
+
   // @Get('profile')
   // @Roles(Role.ADMIN, Role.USER)
   // @UseGuards(AuthGuard, RolesGuard)
   // Profile(@Req() req: RequestWithUser) {
   //   return req.user;
   // }
-
-  @Get('profile')
-  @Auth(Role.ADMIN, Role.USER)
-  Profile(@ActiveUser() user: UserActiveI) {
-    return this.authService.profile(user);
-  }
 }

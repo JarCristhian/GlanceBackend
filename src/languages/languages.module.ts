@@ -6,5 +6,6 @@ import { PrismaService } from '../prisma.service';
 @Module({
   controllers: [LanguagesController],
   providers: [LanguagesService, PrismaService],
+  exports: [LanguagesService]
 })
 export class LanguagesModule { }
