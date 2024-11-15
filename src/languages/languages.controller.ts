@@ -7,7 +7,7 @@ import { Role } from '../common/enums/role.enum';
 import { ActiveUser } from '../common/decorators/active-user.decorator';
 import { UserActiveI } from '../common/interfaces/user-active.interface';
 
-@Auth(Role.USER)
+@Auth(Role.ADMIN)
 @Controller('languages')
 export class LanguagesController {
   constructor(private readonly languagesService: LanguagesService) { }
@@ -30,10 +30,5 @@ export class LanguagesController {
   @Delete(':id')
   removeLanguage(@Param('id') id: string) {
     return this.languagesService.remove(+id);
-  }
-
-  @Get(':id')
-  findOneLanguage(@Param('id') id: string) {
-    return this.languagesService.findOne(+id);
   }
 }

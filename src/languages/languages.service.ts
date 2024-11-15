@@ -7,8 +7,20 @@ import { PrismaService } from '../prisma.service';
 export class LanguagesService {
   constructor(private prisma: PrismaService) { }
 
-  findAll() {
-    return this.prisma.languages.findMany();
+  async findAll() {
+    const languages = await this.prisma.languages.findMany({
+      select: {
+        id: true,
+        name: true,
+        short: true,
+        extention: true,
+        image: true,
+        type: true,
+        reference: true,
+      },
+      orderBy: { createdAt: 'desc' }
+    })
+    return languages;
   }
 
   async create(createLanguageDto: CreateLanguageDto, userId: number) {
@@ -22,7 +34,8 @@ export class LanguagesService {
   }
 
   async update(id: number, updateLanguageDto: UpdateLanguageDto, userId: number) {
-    await this.prisma.languages.update({ data: { ...updateLanguageDto, authorId: userId }, where: { id } });
+    let dateNow = new Date();
+    await this.prisma.languages.update({ data: { ...updateLanguageDto, updatedAt: dateNow, authorId: userId }, where: { id: id } });
     return 'Language update Successfully';
   }
 
@@ -33,9 +46,5 @@ export class LanguagesService {
 
   async findOneByName(name: string) {
     return this.prisma.languages.findUnique({ where: { name } });
-  }
-
-  findOne(id: number) {
-    return this.prisma.languages.findUnique({ where: { id } });
   }
 }

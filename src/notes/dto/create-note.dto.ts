@@ -1,18 +1,25 @@
-import { IsDateString, IsNumber, IsString, MinLength } from "class-validator";
+import {
+  IsArray,
+  IsBoolean,
+  IsNumber,
+  IsString,
+  MinLength,
+} from 'class-validator';
 
 export class createNoteDto {
-    @IsString()
-    @MinLength(1)
-    title: string;
+  @IsString()
+  @MinLength(1)
+  title: string;
 
-    @IsString()
-    @MinLength(1)
-    description: string;
+  @IsString()
+  @MinLength(1)
+  description: string;
 
-    @IsString()
-    @MinLength(1)
-    content: string;
+  @IsArray()
+  tags: [];
+}
 
-    @IsNumber()
-    languageId: number;
+export class createLovedDto {
+  @IsNumber()
+  noteId: number;
 }

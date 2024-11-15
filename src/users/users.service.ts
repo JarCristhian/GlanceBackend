@@ -4,14 +4,12 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from '../prisma.service';
 import * as bcrypt from 'bcrypt';
 
-
-
 @Injectable()
 export class UsersService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   async findAll() {
-    return await this.prisma.users.findMany({ omit: { password: true, } });
+    return await this.prisma.users.findMany({ omit: { password: true } });
   }
 
   async create(createUserDto: CreateUserDto) {
@@ -41,11 +39,24 @@ export class UsersService {
   }
 
   findProfileWithPassword(email: string) {
-    return this.prisma.users.findUnique({ where: { email: email }, select: { id: true, name: true, email: true, password: true, role: true } });
+    return this.prisma.users.findUnique({
+      where: { email: email },
+      select: { id: true, name: true, email: true, password: true, role: true },
+    });
   }
 
   async findOneByEmail(email: string) {
-    return this.prisma.users.findUnique({ where: { email } });
+    return this.prisma.users.findUnique({
+      where: { email: email },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        password: true,
+        role: true,
+        image: true,
+      },
+    });
   }
 
   async hashPassword(password: String) {

@@ -7,7 +7,6 @@ import { LanguagesModule } from 'src/languages/languages.module';
 @Module({
   imports: [LanguagesModule],
   controllers: [],
-  providers: [WebsocketController, WebsocketService, PrismaService]
+  providers: [WebsocketController, WebsocketService, PrismaService],
 })
-
-export class GatewayModule { }
+export class GatewayModule {}

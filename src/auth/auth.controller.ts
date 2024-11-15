@@ -1,10 +1,7 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { LoginDto } from './dto/login-dto';
-import { AuthGuard } from './guard/auth.guard';
-import { RolesGuard } from './guard/roles.guard';
-import { Roles } from './decorators/roles.decorator';
 import { Role } from '../common/enums/role.enum';
 import { Auth } from './decorators/auth.decorator';
 import { UserActiveI } from '../common/interfaces/user-active.interface';
@@ -12,7 +9,7 @@ import { ActiveUser } from '../common/decorators/active-user.decorator';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) { }
+  constructor(private readonly authService: AuthService) {}
 
   @Post('register')
   register(@Body() createAuthDto: CreateAuthDto) {
@@ -29,11 +26,4 @@ export class AuthController {
   Profile(@ActiveUser() user: UserActiveI) {
     return this.authService.profile(user);
   }
-
-  // @Get('profile')
-  // @Roles(Role.ADMIN, Role.USER)
-  // @UseGuards(AuthGuard, RolesGuard)
-  // Profile(@Req() req: RequestWithUser) {
-  //   return req.user;
-  // }
 }

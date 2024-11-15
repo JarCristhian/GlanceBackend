@@ -6,4 +6,19 @@ export class CreateLanguageDto {
     @IsString()
     @MinLength(1)
     name: string;
+
+    @Transform(({ value }) => value.trim())
+    @IsString()
+    @MinLength(1)
+    short: string;
+
+    @Transform(({ value }) => value.trim())
+    @IsString()
+    @MinLength(1)
+    extention: string;
+
+    @IsNumber()
+    type: number;
+
+    reference?: number | null;
 }
