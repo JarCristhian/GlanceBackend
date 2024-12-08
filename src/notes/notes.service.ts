@@ -58,7 +58,7 @@ export class NotesService {
     if (noteLoved) {
       await this.prisma.loved.update({
         where: { id: noteLoved.id },
-        data: { ...createLovedDto, status: false },
+        data: { ...createLovedDto, status: !noteLoved.status },
       });
       return 'Loved update Successfully';
     } else {
